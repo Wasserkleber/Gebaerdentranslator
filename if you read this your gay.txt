@@ -1,0 +1,1 @@
+https://github.com/alphacep/vosk-api/blob/master/src/vosk_api.h
