@@ -1,35 +1,50 @@
 from moviepy.editor import VideoFileClip, concatenate_videoclips
-import time  
-path = "" #path to the Gebärdensprachen video files
+import os
+import Start
 
-input = "World Hello"
-word_list = input.split()
-print(word_list)
-word_list = [item.lower() for item in word_list]
-print(word_list)
+path = r"C:\Gebaerdenstuff\dgs_woerterbuch_gesamt\Gebaerden\video" #path to the Gebaerdensprachen video files
+
+
+input = Start.STT()
+print("das ist der input:", input)
+word_list_raw = input[3]
+word_list = word_list_raw.split()
+
+
+
+"""
+word_list_raw = "auto bombe"
+word_list = word_list_raw.split()
+"""
 
 
 clip_list = []
 saved_clips = {}
-start_time = time.time()
+all_clips_found = True
 
 
-
-for word in word_list:
+for word in word_list:                                  #Load clips into memory
     if word in saved_clips:
+
         clip = clip_list[word]
+        
     else:
-        clip = VideoFileClip("" + word + ".mp4")
-        saved_clips[word] = clip
+        try:
+            clip = VideoFileClip(os.path.join(path, word + ".mp4"))
+            saved_clips[word] = clip
+        except:
+            all_clips_found = False
+        
 
-    clip_list.append(clip)
-
-
-
-
-final_clip = concatenate_videoclips(clip_list)
-final_clip.write_videofile("my_concatenation.mp4")
+    clip_list.append(clip)                                      
 
 
 
-# print(f"initialise clips: {cliped_time - start_time}    cocatenate clips: {final_clip_time - cliped_time} last one: {final_final_clip_time - final_clip_time}")
+if all_clips_found == False:
+    print("One of the words didn't exist")
+else:
+    final_clip = concatenate_videoclips(clip_list)
+    final_clip.write_videofile("my_concatenation.mp4")
+
+
+
