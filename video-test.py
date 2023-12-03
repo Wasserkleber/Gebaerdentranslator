@@ -59,7 +59,7 @@ while (cap.isOpened()):
     
     ret, frame = cap.read()
     if ret == True:
-        cv2.imshow('Frame', frame)
+        cv2.imshow(f'{word_list}', frame)
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
         #here, you can add videos to the playback queue
