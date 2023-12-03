@@ -38,7 +38,7 @@ for word in word_list:
         
     else:
         try:
-            clip = VideoFileClip(os.path.join(path, word + ".mp4"))
+            clip = os.path.join(path, word + ".mp4")
             saved_clips[word] = clip
 
         except RuntimeError as e:
@@ -50,15 +50,9 @@ for word in word_list:
 
 
 
-
-
-#create final video
-final_clip = concatenate_videoclips(clip_list)
-final_clip.write_videofile("output.mp4")
-
-
 #play video
-cap = cv2.VideoCapture('output.mp4')
+cap = cv2.VideoCapture(clip_list[0])
+i = 1
 if (cap.isOpened() == False):
     print("Error opening video stream or file")
 while (cap.isOpened()):
@@ -69,7 +63,11 @@ while (cap.isOpened()):
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
     else:
-        break
+        try:
+            cap = cv2.VideoCapture(clip_list[i])
+            i+=1
+        except:
+            break
 cap.release()
 cv2.destroyAllWindows()
 
