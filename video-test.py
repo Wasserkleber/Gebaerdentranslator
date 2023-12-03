@@ -62,6 +62,7 @@ while (cap.isOpened()):
         cv2.imshow('Frame', frame)
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
+        #here, you can add videos to the playback queue
     else:
         try:
             cap = cv2.VideoCapture(clip_list[i])
