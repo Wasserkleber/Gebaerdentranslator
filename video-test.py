@@ -1,16 +1,17 @@
 from moviepy.editor import VideoFileClip, concatenate_videoclips
 import os
-from Start import speach_to_text
+from speech_to_text import speech_to_text
+import cv2
 
 path = r"D:\Dokumente\Schule\Klasse 10\Franzosisch\forschung\dgs_vids\video" #path to the Gebaerdensprachen video files
 
+
+
 """
-input:str = speach_to_text()
+#speech to text
+input:str = speech_to_text()
 word_list = input.split()
 print(f'speach_to_text word_list: {word_list}')
-
-
-
 """
 word_list_raw = "auto und reifen"
 word_list = word_list_raw.split()
@@ -23,15 +24,15 @@ with open('blacklist_words_dgs.txt') as f:
     for word in word_list:
         if(word in blacklist):
             word_list.remove(word)
-            print(word)
 
 
+
+#Load clips into memory
 clip_list = []
 saved_clips = {}
 all_clips_found = True
 
-
-for word in word_list:                                  #Load clips into memory
+for word in word_list:
     if word in saved_clips:
         clip = clip_list[clip_list.index[word]]
         
@@ -48,5 +49,28 @@ for word in word_list:                                  #Load clips into memory
     clip_list.append(clip)                                      
 
 
+
+
+
+#create final video
 final_clip = concatenate_videoclips(clip_list)
 final_clip.write_videofile("output.mp4")
+
+
+#play video
+cap = cv2.VideoCapture('output.mp4')
+if (cap.isOpened() == False):
+    print("Error opening video stream or file")
+while (cap.isOpened()):
+    
+    ret, frame = cap.read()
+    if ret == True:
+        cv2.imshow('Frame', frame)
+        if cv2.waitKey(25) & 0xFF == ord('q'):
+            break
+    else:
+        break
+cap.release()
+cv2.destroyAllWindows()
+
+os.remove('output.mp4')
