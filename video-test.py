@@ -1,20 +1,21 @@
-from moviepy.editor import VideoFileClip, concatenate_videoclips
+#from moviepy.editor import VideoFileClip, concatenate_videoclips
 import os
 from speech_to_text import speech_to_text
 import cv2
+from search_for_words import search_for_words_with_underscores
 
-path = r"D:\Dokumente\Schule\Klasse 10\Franzosisch\forschung\dgs_vids\video" #path to the Gebaerdensprachen video files
+path = r"C:\Gebaerdenstuff\dgs_woerterbuch_gesamt\Gebaerden\video" #path to the Gebaerdensprachen video files
 
 
 
 """
 #speech to text
 input:str = speech_to_text()
-word_list = input.split()
+word_list = search_for_words_with_underscores(input.split())
 print(f'speach_to_text word_list: {word_list}')
 """
-word_list_raw = "auto und reifen"
-word_list = word_list_raw.split()
+word_list_raw = "katze tafel abschreiben zu und ab auto von der"
+word_list = search_for_words_with_underscores(word_list_raw.split())
 
 
 
@@ -72,4 +73,4 @@ while (cap.isOpened()):
 cap.release()
 cv2.destroyAllWindows()
 
-os.remove('output.mp4')
+#os.remove('output.mp4')

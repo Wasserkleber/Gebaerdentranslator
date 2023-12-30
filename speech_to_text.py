@@ -5,7 +5,7 @@ import pyaudio
 def speech_to_text():
     print('start.py - start loading model')
     #model = Model(r"D:\Dokumente\Schule\Klasse 10\Franzosisch\forschung\vosk-model-de-0.21")
-    model = Model(r"D:\Dokumente\Schule\Klasse 10\Franzosisch\forschung\vosk-model-small-de-zamia-0.3")
+    model = Model(r"C:\Gebaerdenstuff\vosk\vosk-model-de-0.21")
     recog = KaldiRecognizer(model, 16000)
     print("start.py - loaded model successfully")
 
