@@ -5,6 +5,7 @@ from Test_for_underscore import test
 import tkinter as tk
 
 filepath = r"C:\Gebaerdenstuff\dgs_woerterbuch_gesamt\Gebaerden\video"
+filepathrecording = r"C:\Gebaerdenstuff\Recording.txt"
 
 
 def play_multiple_videos(video_paths):
@@ -35,32 +36,49 @@ def play_multiple_videos(video_paths):
     cv2.destroyAllWindows()
     
 
+def main(wordlist_from_ui = None):
+    print(wordlist_from_ui)
+    while True:
+        if wordlist_from_ui == None:
+            wordlist_raw = speech_to_text()
+            #print(wordlist_raw)
+        else:
+            wordlist_raw = wordlist_from_ui
+            
+        #wordlist_raw = "ab jetzt und zu dann"
+        wordlist = wordlist_raw.split()
+        print(wordlist)
+        wordlist = lemmatize_sogularize_words(wordlist)
+        wordlist = test(wordlist)
+        print("die list ist:", wordlist)
 
-while True:
-    #wordlist_raw = speech_to_text()
-    wordlist_raw = "ab jetzt und zu dann"
-    wordlist = wordlist_raw.split()
-    print(wordlist)
-    wordlist = lemmatize_sogularize_words(wordlist)
-    wordlist = test(wordlist)
-    print("die list ist:", wordlist)
-        
-
-    file_paths = []
-    for word in wordlist:
-        file_path = f"{filepath}\\{word}.mp4"
-        file_paths.append(file_path)
+        file_paths = []
+        for word in wordlist:
+            file_path = f"{filepath}\\{word}.mp4"
+            file_paths.append(file_path)
     
-    # Print the file paths
-    for path in file_paths:
-        print(path)
+        # Print the file paths
+        for path in file_paths:
+            print(path)
+            
+        with open("Recording.txt", "w") as datei:
+            for element in file_paths:
+                datei.write(element + "\n")
         
 
-    play_multiple_videos(file_paths)
-    break
+        play_multiple_videos(file_paths)
+        break
 
 
+def playRecording():
+    
 
+    with open(filepathrecording, "r") as datei:
+        recording_paths = datei.readlines()
+    recording_paths = [zeile.strip() for zeile in recording_paths]
+
+    
+    play_multiple_videos(recording_paths)
 
 
 
