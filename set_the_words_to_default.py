@@ -1,10 +1,9 @@
-import spacy
+import spacy #Api für Wortkunjugation
 #python -m spacy download de_core_news_sm
 #pip install spacy
 
 
-def singularize(word, pos):
-    # Einfache Logik, um einige häufige Fälle von Pluralformen zu Singularformen zu konvertieren
+def singularize(word, pos): # Einfache Logik, um einige häufige Fälle von Pluralformen zu Singularformen zu konvertieren
     if pos == "NOUN":
         if word.endswith('en'):
             return word[:-2]
@@ -14,7 +13,7 @@ def singularize(word, pos):
             return word[:-1]
     return word
 
-def lemmatize_and_singularize(words):
+def lemmatize_and_singularize(words): #Macht Deutsch, nicht so meinz
     nlp = spacy.load("de_core_news_sm")
 
     processed_words = []
@@ -28,6 +27,6 @@ def lemmatize_and_singularize(words):
     return processed_words
 
 
-def lemmatize_sogularize_words(words):
+def lemmatize_sogularize_words(words): #Mainprogramm von dem aus es gesteuert wird
     
     return(lemmatize_and_singularize(words))
