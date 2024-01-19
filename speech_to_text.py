@@ -1,13 +1,12 @@
-# speech_recognition_module.py
 from vosk import Model, KaldiRecognizer
 import pyaudio
 
 # Initialisiere das Vosk-Modell als globalen Parameter
-MODEL_PATH = r"C:\Gebaerdenstuff\vosk-model-small-de-zamia-0.3"
+MODEL_PATH = r"C:\Gebaerdenstuff\vosk-model-small-de-zamia-0.3" #Path zum Vosk-Speach-Text-Model
 MODEL = Model(MODEL_PATH)
 RECOG = KaldiRecognizer(MODEL, 16000)
 
-def speech_to_text():
+def speech_to_text(): #Funktion die Speech in Text verwandelt
     print('start.py - using preloaded model')
 
     cap = pyaudio.PyAudio()
@@ -21,6 +20,6 @@ def speech_to_text():
         if RECOG.AcceptWaveform(data):
             return RECOG.Result().split(('"'))[3]
 
-if __name__ == "__main__":
+if __name__ == "__main__": #Zum testen
     # Beispielcode hier hinzufügen
     pass
